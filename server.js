@@ -50,10 +50,11 @@ const server = () => {
   srv = http.createServer(async (req, res) => {
     const routes = Object.keys(routeTable)
     let match = false
+
     for (let i = 0; i < routes.length; i++) {
       const route = routes[i]
       const parsedRoute = parse(route)
-      if (new RegExp(parsedRoute).test(req.url) && routeTable[route][req.method.toLowerCase()]) {
+      if (new RegExp(`^${parsedRoute}$`).test(req.url) && routeTable[route][req.method.toLowerCase()]) {
         let cb = routeTable[route][req.method.toLowerCase()]
         let middleware = routeTable[route][`${req.method.toLowerCase()}-middleware`]
 

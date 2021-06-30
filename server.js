@@ -98,8 +98,26 @@ const server = () => {
         registerPath(path, rest[1], 'get', rest[0])
       }
     },
-    post(path, cb) {
-      routeTable[path] = {'post': cb}
+    post: (path, ...rest) => {
+      if (rest.length === 1) {
+        registerPath(path, rest[0], 'post');
+      } else {
+        registerPath(path, rest[1], 'post', rest[0]);
+      }
+    },
+    put: (path, ...rest) => {
+      if (rest.length === 1) {
+        registerPath(path, rest[0], 'put');
+      } else {
+        registerPath(path, rest[1], 'put', rest[0]);
+      }
+    },
+    delete: (path, ...rest) => {
+      if (rest.length === 1) {
+        registerPath(path, rest[0], 'delete');
+      } else {
+        registerPath(path, rest[1], 'delete', rest[0]);
+      }
     },
     listen: (port, cb) => {
       srv.listen(port, cb)
